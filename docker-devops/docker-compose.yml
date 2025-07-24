@@ -1,0 +1,43 @@
+services:
+  drone-server:
+    image: drone/drone:latest
+    container_name: drone-server
+    ports:
+      - '8080:80' # Map host port 8080 to container port 80 for Drone UI
+    environment:
+      - DRONE_GITHUB_CLIENT_ID=${DRONE_GITHUB_CLIENT_ID} # Replace with your GitHub OAuth App ID
+      - DRONE_GITHUB_CLIENT_SECRET=${DRONE_GITHUB_CLIENT_SECRET} # Replace with your GitHub OAuth App Secret
+      - DRONE_RPC_SECRET=${DRONE_RPC_SECRET} # Generate a secure secret
+      - DRONE_SERVER_HOST=${DRONE_SERVER_HOST} # Replace with your domain
+      - DRONE_USER_FILTER=${DRONE_USER_FILTER}
+      - DRONE_SERVER_PROTO=http
+    volumes:
+      - drone_data:/data
+    restart: unless-stopped
+    networks:
+      - npm-network
+
+  drone-runner:
+    image: drone/drone-runner-docker:latest
+    container_name: drone-runner
+    environment:
+      - DRONE_RPC_HOST=drone-server
+      - DRONE_RPC_SECRET=${DRONE_RPC_SECRET:-your-secure-secret} # Match drone-server secret
+      - DRONE_RUNNER_CAPACITY=2
+      - DRONE_RUNNER_NAME=docker-runner
+    volumes:
+      - /var/run/docker.sock:/var/run/docker.sock
+    restart: unless-stopped
+    networks:
+      - npm-network
+
+  uptime-kuma:
+    image: louislam/uptime-kuma:latest
+    container_name: uptime-kuma
+    ports:
+      - '3001:3001' # Uptime Kuma UI
+    volumes:
+      - uptime_kuma_data:/app/data
+    restart: unless-stopped
+    networks:
+      - npm-network
