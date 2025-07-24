@@ -57,3 +57,13 @@ CREATE DATABSE npm;
 CREATE USER 'npm_user'@'%' IDENTIFIED BY 'Npmuser@2025';
 GRANT ALL PRIVILEGES ON npm.* TO 'npm_user'@'%';
 FLUSH PRIVILEGES;
+
+
+# Git ssh enable / same for drone to sites ssh
+ssh-keygen -t rsa -b 4096 -C "scodusnp@gmail.com"
+eval "$(ssh-agent -s)"
+ssh-add ~/.ssh/id_ed25519
+# Now view the content of public key and add it to gihub/another instance's authorized keys
+# adding to authorized keys in sites instance
+cat drone.pub >> ~/.ssh/authorized_key
+
