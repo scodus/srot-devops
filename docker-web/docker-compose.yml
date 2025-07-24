@@ -17,3 +17,18 @@ services:
       - ./data:/data
       - ./letsencrypt:/etc/letsencrypt
     restart: unless-stopped
+    networks:
+      - srot-network  # attach to srot network
+
+  hospitality-web:
+    image: halverneus/static-file-server
+    container_name: hospitality
+    volumes:
+      - /home/ubuntu/hospitality/web/public_html:/web
+    restart: unless-stopped
+    networks:
+      - my-custom-network  # attach to custom network
+
+networks:
+  my-custom-network:
+    driver: bridge
