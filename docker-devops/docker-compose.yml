@@ -14,8 +14,6 @@ services:
     volumes:
       - drone_data:/data
     restart: unless-stopped
-    networks:
-      - npm-network
 
   drone-runner:
     image: drone/drone-runner-docker:latest
@@ -28,8 +26,6 @@ services:
     volumes:
       - /var/run/docker.sock:/var/run/docker.sock
     restart: unless-stopped
-    networks:
-      - npm-network
 
   uptime-kuma:
     image: louislam/uptime-kuma:latest
@@ -39,5 +35,3 @@ services:
     volumes:
       - uptime_kuma_data:/app/data
     restart: unless-stopped
-    networks:
-      - npm-network
