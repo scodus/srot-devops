@@ -40,6 +40,7 @@ SHOW DATABASES;
 CREATE USER 'scodus'@'%' IDENTIFIED BY 'Scodus@2025';
 GRANT ALL PRIVILEGES ON *.* TO 'scodus'@'%';
 GRANT ALL PRIVILEGES ON *.* TO 'scodus'@'%';
+FLUSH PRIVILEGES;
 
 
 
@@ -49,3 +50,10 @@ sudo nano /usr/local/bin/mysql_tunnel.sh
 #!/bin/bash
 ssh -N -L 0.0.0.0:3307:192.168.03:3306 user@192.168.0.3
 */
+
+
+# NPM user
+CREATE DATABSE npm;
+CREATE USER 'npm_user'@'%' IDENTIFIED BY 'Npmuser@2025';
+GRANT ALL PRIVILEGES ON npm.* TO 'npm_user'@'%';
+FLUSH PRIVILEGES;

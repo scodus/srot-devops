@@ -1,6 +1,11 @@
 services:
   npm:
     image: jc21/nginx-proxy-manager
+    container_name: nginx-proxy-manager
+    ports:
+      - "80:80"      # Public HTTP
+      - "81:81"      # Admin UI
+      - "443:443"    # Public HTTPS
     env_file:
       - .env
     deploy:
@@ -8,3 +13,4 @@ services:
         limits:
           cpus: '0.5'
           memory: 512M
+    restart: unless-stopped
