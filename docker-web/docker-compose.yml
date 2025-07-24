@@ -34,3 +34,4 @@ services:
 networks:
   srot-network:
     driver: bridge
+    external: true
