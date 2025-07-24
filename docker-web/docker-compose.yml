@@ -23,6 +23,8 @@ services:
   hospitality-web:
     image: halverneus/static-file-server
     container_name: hospitality
+    ports:
+      - "3001:80" 
     volumes:
       - /home/ubuntu/hospitality/web/public_html:/web
     restart: unless-stopped

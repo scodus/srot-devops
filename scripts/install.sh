@@ -67,3 +67,9 @@ ssh-add ~/.ssh/id_ed25519
 # adding to authorized keys in sites instance
 cat drone.pub >> ~/.ssh/authorized_key
 
+
+# allow docker read permission for static file serving
+sudo chmod -R o+r /home/ubuntu/hospitality/web/public_html
+sudo chmod -R o+X /home/ubuntu/hospitality/web/public_html
+
+
