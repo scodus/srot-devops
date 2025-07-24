@@ -22,7 +22,7 @@ services:
 
   hospitality-web:
     image: halverneus/static-file-server
-    container_name: hospitality
+    container_name: hospitality-web
     ports:
       - "3001:80" 
     volumes:
