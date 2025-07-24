@@ -11,9 +11,11 @@ services:
       - DRONE_SERVER_HOST=${DRONE_SERVER_HOST} # Replace with your domain
       - DRONE_USER_FILTER=${DRONE_USER_FILTER}
       - DRONE_SERVER_PROTO=http
-    volumes:
-      - ./drone_data:/data
+      - DRONE_DATABASE_DRIVER=mysql
+      - DRONE_DATABASE_DATASOURCE=${DRONE_DB_USER}:${DRONE_DB_PASSWORD}@tcp(${DRONE_DB_HOST})/${DRONE_DB_NAME}?parseTime=true
     restart: unless-stopped
+    networks:
+      - npm-network
 
   drone-runner:
     image: drone/drone-runner-docker:latest
@@ -26,12 +28,25 @@ services:
     volumes:
       - /var/run/docker.sock:/var/run/docker.sock
     restart: unless-stopped
+    networks:
+      - npm-network
 
   uptime-kuma:
     image: louislam/uptime-kuma:latest
     container_name: uptime-kuma
     ports:
       - '3001:3001' # Uptime Kuma UI
-    volumes:
-      - ./uptime_kuma_data:/app/data
+    environment:
+      - UPTIME_KUMA_DB_TYPE=mysql
+      - UPTIME_KUMA_DB_HOST=${UPTIME_KUMA_DB_HOST}
+      - UPTIME_KUMA_DB_PORT=3306
+      - UPTIME_KUMA_DB_USER=${UPTIME_KUMA_DB_USER}
+      - UPTIME_KUMA_DB_PASS=${UPTIME_KUMA_DB_PASSWORD}
+      - UPTIME_KUMA_DB_NAME=${UPTIME_KUMA_DB_NAME}
     restart: unless-stopped
+    networks:
+      - npm-network
+
+networks:
+  npm-network:
+    external: true
