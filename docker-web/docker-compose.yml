@@ -1,0 +1,10 @@
+services:
+  npm:
+    image: jc21/nginx-proxy-manager
+    env_file:
+      - .env
+    deploy:
+      resources:
+        limits:
+          cpus: '0.5'
+          memory: 512M
