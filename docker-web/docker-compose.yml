@@ -27,8 +27,8 @@ services:
       - /home/ubuntu/hospitality/web/public_html:/web
     restart: unless-stopped
     networks:
-      - my-custom-network  # attach to custom network
+      - srot-network  # attach to custom network
 
 networks:
-  my-custom-network:
+  srot-network:
     driver: bridge
