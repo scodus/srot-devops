@@ -13,4 +13,7 @@ services:
         limits:
           cpus: '0.5'
           memory: 512M
+    volumes:
+      - ./data:/data
+      - ./letsencrypt:/etc/letsencrypt
     restart: unless-stopped
